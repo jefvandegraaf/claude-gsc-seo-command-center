@@ -11,7 +11,7 @@ const change = (cur, prev) => (prev ? Math.round(((cur - prev) / prev) * 100) : 
 export const pretty = (path) => {
   if (!path || path === '/') return 'Home page';
   const name = decodeURIComponent(path).replace(/[?#].*$/, '').replace(/^\/|\/$/g, '').split('/').pop().replace(/[-_]+/g, ' ');
-  return name.charAt(0).toUpperCase() + name.slice(1);
+  return name.replace(/\b([a-z])/g, (m) => m.toUpperCase());
 };
 
 export function headline(snap) {

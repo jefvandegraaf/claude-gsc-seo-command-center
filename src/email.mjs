@@ -3,6 +3,8 @@
 import { claudeLink } from './tasks.mjs';
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// Join the last two words so no line ends with one word on its own.
+export const tie = (s) => String(s ?? '').replace(/ (\S{1,16})$/, '\u00a0$1');
 const fmt = (v) => Number(v || 0).toLocaleString('en-US');
 const FONT = "Inter,-apple-system,'Segoe UI',Arial,sans-serif";
 const INK = '#111111', META = '#6b6b6b', LINE = '#e7e6e2', TINT = '#f6f5f2', UP = '#1f7a45', DOWN = '#a3170f';
@@ -21,7 +23,7 @@ function tile(label, v) {
 <div style="font-size:13px;font-weight:600;color:${d.color};padding-top:4px">${d.text}</div></td></tr></table></td>`;
 }
 const p = (t, s = '') => `<p style="margin:0 0 12px;font:400 15px/1.55 ${FONT};color:${INK};${s}">${t}</p>`;
-const h2 = (t) => `<h2 style="margin:28px 0 10px;font:600 19px/1.3 ${FONT};color:${INK}">${esc(t)}</h2>`;
+const h2 = (t) => `<h2 style="margin:28px 0 10px;font:600 19px/1.3 ${FONT};color:${INK}">${esc(tie(t))}</h2>`;
 const small = (t) => `<p style="margin:6px 0 0;font:400 13px/1.5 ${FONT};color:${META}">${t}</p>`;
 const button = (href, text, color) => `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:12px 0 4px"><tr><td style="background:${color};border-radius:8px"><a href="${esc(href)}" style="display:inline-block;padding:11px 18px;font:600 14px/1 ${FONT};color:#ffffff;text-decoration:none">${esc(text)}</a></td></tr></table>`;
 
@@ -50,14 +52,14 @@ export function digestHtml({ site, head, digest, tasks, info, wins, snap }) {
   const body = [
     brand.logoUrl ? `<img src="${esc(brand.logoUrl)}" alt="${esc(brand.name || '')}" height="32" style="display:block;height:32px;width:auto;margin:0 0 18px">` : (brand.name ? `<div style="font:600 14px ${FONT};color:${META};margin-bottom:18px">${esc(brand.name)}</div>` : ''),
     `<div style="font:400 13px ${FONT};color:${META}">${esc(site.name || site.url)} · week of ${esc(week)} · last 28 days vs the 28 before</div>`,
-    `<h1 style="margin:8px 0 12px;font:600 24px/1.25 ${FONT};color:${INK}">${esc(digest.headline)}</h1>`,
-    p(esc(digest.summary)),
+    `<h1 style="margin:8px 0 12px;font:600 24px/1.25 ${FONT};color:${INK}">${esc(tie(digest.headline))}</h1>`,
+    p(esc(tie(digest.summary))),
     tileRows.join(''),
     actions.length ? h2(`This week's ${actions.length === 1 ? 'task' : `${actions.length} tasks`}`) : '',
     ...actions.map((a, i) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 14px;border:1px solid ${LINE};border-radius:12px"><tr><td style="padding:16px 18px;font-family:${FONT}">
 <div style="font:600 13px ${FONT};color:${META}">${i + 1} of ${actions.length}</div>
-<div style="font:600 16px/1.35 ${FONT};color:${INK};padding:4px 0 8px">${esc(a.task.title)}</div>
-${p(esc(a.why), 'margin-bottom:6px')}
+<div style="font:600 16px/1.35 ${FONT};color:${INK};padding:4px 0 8px">${esc(tie(a.task.title))}</div>
+${p(esc(tie(a.why)), 'margin-bottom:6px')}
 ${small(esc(a.task.evidence))}
 ${button(claudeLink(a.task.prompt), 'Open the fix prompt in Claude', color)}
 ${small('Or copy it into Claude Code in your website\'s folder:')}

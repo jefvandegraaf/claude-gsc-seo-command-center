@@ -6,6 +6,10 @@ It runs on your own computer. Your data stays there.
 
 > Part of a free series by [Jef van de Graaf](https://jefvandegraaf.com): [build your site with Claude](https://github.com/jefvandegraaf/claude-code-smb-website-starter-kit) → [check it before and after launch](https://github.com/jefvandegraaf/ai-built-website-checklist) → **grow it, week by week (this repo)**.
 
+![This week's report in the desktop app: the summary, your numbers and the three tasks](docs/images/app-this-week.webp)
+
+*Screenshots use the built-in demo: a fictional plumber with made-up numbers.*
+
 ---
 
 ## What it does every week
@@ -21,6 +25,11 @@ It runs on your own computer. Your data stays there.
    - **Slow on phones:** PageSpeed under 50, with the biggest wins
 3. **Turns findings into tasks** you can mark *done* or *ignore*, so next week's email moves on. 28 days after you mark one done, it measures what changed ("clicks 31 → 58, position 7.4 → 4.9").
 4. **Emails a digest** via Resend: a one-line summary, your numbers, this week's three tasks, each with a fix prompt you can open straight in Claude or paste into Claude Code in your website's folder.
+
+<table><tr>
+<td width="62%"><img src="docs/images/app-tasks.webp" alt="Tasks tab: each finding with its numbers, a fix prompt, Copy, Open in Claude, Mark done and Ignore"><br><img src="docs/images/app-done-impact.webp" alt="A finished task, measured 28 days later: clicks 31 to 64, position 7.4 to 4.6"></td>
+<td width="38%"><img src="docs/images/email-phone-top.webp" alt="The Monday email on a phone"></td>
+</tr></table>
 
 Optional: let **Claude** pick and explain the week's top three (your own Claude API key, or Claude Code on your own computer). It only ranks and explains findings the rules already made, with their numbers. It can't invent new ones.
 

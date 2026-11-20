@@ -16,7 +16,7 @@ export function fixPrompt(f, site) {
     case 'cannibal':
       return `These pages on my site compete for the Google search "${f.query}": ${(f.pages || []).join(', ')} (site: ${site.url}). Read them and recommend ONE: merge them (which one keeps the URL, what moves over, and the 301 redirect to add), or differentiate them (a distinct search intent for each, new titles, and internal links from the weaker page to the stronger one). Explain the trade-off.`;
     case 'decay':
-      return `My page ${page} is losing Google clicks: ${f.evidence.replace(/.$/, '')}. Help me find out why. Check: is the content out of date, did the title or page change recently, is a competitor now outranking it for the main searches, is it still indexable (no noindex, loads fast, canonical correct)? Then give me a short refresh plan in order of impact.`;
+      return `My page ${page} is losing Google clicks: ${f.evidence.replace(/\.$/, '')}. Help me find out why. Check: is the content out of date, did the title or page change recently, is a competitor now outranking it for the main searches, is it still indexable (no noindex, loads fast, canonical correct)? Then give me a short refresh plan in order of impact.`;
     case 'prune':
       return `These pages on ${site.url} have had zero Google impressions in 90 days, and they're all older than 90 days: ${(f.pages || []).join(', ')}. For each, recommend: improve (and how), merge into another page (which one, plus the 301 redirect), or remove (410 or 301). Keep any page that brings customers from somewhere other than Google, even if Google ignores it. Ask me before deleting anything.`;
     case 'index':

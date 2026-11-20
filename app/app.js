@@ -47,7 +47,7 @@ function renderTasks() {
   const list = tasks.filter((t) => t.status === filter).sort((a, b) => b.score - a.score);
   $('#task-list').innerHTML = list.length ? list.map((t) => `
     <div class="task" data-id="${esc(t.id)}">
-      <h3>${esc(t.title)}</h3>
+      <h3>${esc(String(t.title).replace(/ (\S{1,16})$/, '\u00a0$1'))}</h3>
       <div class="ev">${esc(t.evidence)}</div>
       ${t.impact ? `<div class="impact${t.impact.better ? ' good' : ''}">After 28 days: ${esc(t.impact.text)}</div>` : t.status === 'done' ? `<div class="impact">Marked done ${esc((t.doneAt || '').slice(0, 10))}. Impact is measured 28 days later.</div>` : ''}
       <details><summary>Fix prompt</summary><pre>${esc(t.prompt)}</pre></details>

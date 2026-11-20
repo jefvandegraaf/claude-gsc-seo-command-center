@@ -21,6 +21,7 @@ try {
   const html = readFileSync(digestPath(site.id), 'utf8');
   assert.match(html, /claude\.ai\/new\?q=/);
   assert.doesNotMatch(html, /undefined|NaN/);
+  assert.doesNotMatch(html, /\d\.\. /, 'a number lost its last digit');
   // The young page must not be suggested for pruning.
   assert.ok(!r.findings.find((f) => f.type === 'prune').pages.includes('/riverdale-plumber/'));
 
