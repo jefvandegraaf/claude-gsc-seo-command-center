@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.json.key
+*service-account*.json
+seo-reader*.json
+data/
+.DS_Store
+Thumbs.db

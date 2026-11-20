@@ -1,0 +1,28 @@
+{
+  "name": "claude-gsc-seo-command-center",
+  "version": "1.0.0",
+  "description": "A free SEO command center for small business websites: Google Search Console + GA4/Fathom + PageSpeed, analysed weekly, with fix prompts for Claude and a Monday email.",
+  "private": true,
+  "type": "module",
+  "main": "app/main.mjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "app": "electron .",
+    "demo": "node cli.mjs demo",
+    "cli": "node cli.mjs",
+    "check": "node cli.mjs check",
+    "scheduled": "node cli.mjs scheduled",
+    "test": "node test/smoke.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.5.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0"
+  },
+  "author": "Jef van de Graaf (https://jefvandegraaf.com)",
+  "license": "MIT"
+}

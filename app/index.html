@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; frame-src 'self' about:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEO Command Center</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <aside class="rail">
+    <div class="brand">SEO Command Center</div>
+    <nav id="sites" aria-label="Sites"></nav>
+    <button class="rail-btn" id="add-site">+ Add a site</button>
+    <button class="rail-btn ghost" id="try-demo">Try the demo</button>
+    <div class="rail-foot">
+      <button class="rail-btn ghost" id="open-settings">Settings and keys</button>
+    </div>
+  </aside>
+
+  <main id="main">
+    <section id="view-welcome" class="view">
+      <h1>Your weekly SEO to-do list, in one place</h1>
+      <p class="lede">Connect Google Search Console (plus GA4 or Fathom if you use them). Every Monday you get the three fixes most likely to bring in more visitors, each with a prompt you can hand to Claude.</p>
+      <ol class="steps">
+        <li><strong>See it work first:</strong> click <em>Try the demo</em>. It uses made-up data, no keys needed.</li>
+        <li><strong>Connect Google:</strong> in <em>Settings and keys</em>, add your service account key (the README walks you through it in about 10 minutes).</li>
+        <li><strong>Add your site</strong>, run it once, then add who should get the Monday email.</li>
+      </ol>
+    </section>
+
+    <section id="view-site" class="view" hidden>
+      <header class="site-head">
+        <div>
+          <h1 id="site-name"></h1>
+          <div class="meta" id="site-meta"></div>
+        </div>
+        <div class="actions">
+          <button id="run">Refresh now</button>
+          <button id="run-send" class="ghost">Refresh and email</button>
+        </div>
+      </header>
+      <div class="tabs" role="tablist">
+        <button role="tab" data-tab="week" aria-selected="true">This week</button>
+        <button role="tab" data-tab="tasks">Tasks</button>
+        <button role="tab" data-tab="setup">Site setup</button>
+      </div>
+      <div class="tab" id="tab-week">
+        <p class="empty" id="week-empty" hidden>No report yet. Click <strong>Refresh now</strong>.</p>
+        <iframe id="digest" title="This week's digest" sandbox="allow-popups allow-popups-to-escape-sandbox"></iframe>
+      </div>
+      <div class="tab" id="tab-tasks" hidden>
+        <div class="filters">
+          <button data-filter="open" aria-pressed="true">Open</button>
+          <button data-filter="done">Done</button>
+          <button data-filter="ignored">Ignored</button>
+        </div>
+        <div id="task-list"></div>
+      </div>
+      <div class="tab" id="tab-setup" hidden>
+        <form id="site-form" class="form"></form>
+      </div>
+    </section>
+
+    <section id="view-settings" class="view" hidden>
+      <h1>Settings and keys</h1>
+      <p class="meta">Keys are encrypted with your computer's keychain and never leave this machine, except to the service they belong to.</p>
+      <div id="keys" class="card"></div>
+      <form id="settings-form" class="form card"></form>
+      <div class="card">
+        <h2>Emails while your computer sleeps</h2>
+        <p>The app sends Monday emails while it's open, including when it's minimised to the tray. If it was closed on Monday, it catches up the next time it opens that week. For emails that go out even when your computer is off, see <a href="https://github.com/jefvandegraaf/claude-gsc-seo-command-center/blob/main/docs/always-on.md" target="_blank">the always-on guide</a>.</p>
+        <p class="meta" id="data-dir"></p>
+      </div>
+    </section>
+
+    <pre id="log" aria-live="polite"></pre>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
