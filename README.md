@@ -1,5 +1,7 @@
 # Claude GSC SEO Command Center
 
+> **Beta.** This public version is new and hasn't been tested on live accounts yet. It's based on the working reporting system I use with my clients. If something breaks, please [open an issue](https://github.com/jefvandegraaf/claude-gsc-seo-command-center/issues).
+
 A free SEO command center for small business websites. It reads Google Search Console (plus GA4 or Fathom, and PageSpeed Insights), finds what's worth fixing, and every Monday morning emails you, your team or your client the **three fixes most likely to bring in more visitors**. Each fix comes with a ready-made prompt for Claude.
 
 It runs on your own computer. Your data stays there.
