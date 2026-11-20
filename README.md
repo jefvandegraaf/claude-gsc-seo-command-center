@@ -2,6 +2,8 @@
 
 > **Beta.** This public version is new and hasn't been tested on live accounts yet. It's based on the working reporting system I use with my clients. If something breaks, please [open an issue](https://github.com/jefvandegraaf/claude-gsc-seo-command-center/issues).
 
+**Free to use.** If it helps you, [support the project on my Patron page](https://jefvandegraaf.com/patron/).
+
 A free SEO command center for small business websites. It reads Google Search Console (plus GA4 or Fathom, and PageSpeed Insights), finds what's worth fixing, and every Monday morning emails you, your team or your client the **three fixes most likely to bring in more visitors**. Each fix comes with a ready-made prompt for Claude.
 
 It runs on your own computer. Your data stays there.
@@ -82,6 +84,14 @@ Need emails while your computer sleeps, or for a whole agency client list? [docs
 ## How it decides
 
 Rules, not vibes. The thresholds scale with your site's size, so a small local site still gets useful findings. Search Console data runs about three days behind, so each week covers the 28 days ending three days ago. Everything is in [src/analyse.mjs](src/analyse.mjs) if you want to tune it.
+
+## Found this helpful?
+
+This is free, and it stays free. If it saved you time, money or a developer's invoice, please [leave a tip or become a patron](https://jefvandegraaf.com/patron/): one-off tips start at $3, and monthly support starts at $5. It keeps these tools maintained and updated.
+
+Don't let Jef starve.
+
+[**Support Jef on the Patron page →**](https://jefvandegraaf.com/patron/)
 
 ## Rather have someone do it?
 

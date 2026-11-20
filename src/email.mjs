@@ -157,7 +157,7 @@ ${wins.map((t) => `<p style="margin:0 0 10px;font:400 15px/1.5 ${FONT};color:${I
 <td style="font:600 16px/1.2 ${FONT};color:${INK}">${logo}${esc(sender)}</td>
 <td align="right" style="font:400 13px/1.35 ${FONT};color:${META}">Weekly SEO report<br>${esc(week)}</td></tr></table></td></tr>
 <tr><td style="background:${HERO};padding:32px 16px"><div style="font-family:${FONT}">
-<div class="r-title" style="font-size:28px;line-height:1.2;font-weight:600;color:#ffffff">${esc(tie(digest.headline))}</div>
+<h1 class="r-title" style="margin:0;font-size:28px;line-height:1.2;font-weight:600;color:#ffffff">${esc(tie(digest.headline))}</h1>
 <div class="r-sub" style="font-size:15px;line-height:1.5;color:rgba(255,255,255,.85);padding-top:10px">How ${domain ? `<a href="${esc(site.url)}" style="color:#ffffff;text-decoration:underline">${esc(domain)}</a>` : esc(site.name)} did in the last 28 days, compared to the 28&nbsp;before.</div>
 </div></td></tr>
 <tr><td style="padding:24px 16px">${body.join('\n')}
