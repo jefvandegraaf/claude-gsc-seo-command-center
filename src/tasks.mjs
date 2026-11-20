@@ -14,7 +14,7 @@ export function fixPrompt(f, site) {
     case 'ctr':
       return `My page ${page} shows up around position ${f.metrics.position} on Google but only ${(f.metrics.ctr * 100).toFixed(1)}% of people click it.${(f.queries || []).length ? ` Top searches: ${f.queries.map((q) => `"${q}"`).join(', ')}.` : ''} Write 3 alternative title tags (under 60 characters) and 3 meta descriptions (under 155 characters) that give a searcher a clear reason to click, without clickbait or claims I can't back up. Explain which you'd pick and why.`;
     case 'cannibal':
-      return `These pages on my site compete for the Google search "${f.query}": ${(f.pages || []).join(', ')} (site: ${site.url}). Read them and recommend ONE: merge them (which one keeps the URL, what moves over, and the 301 redirect to add), or differentiate them (a distinct search intent for each, new titles, and internal links from the weaker page to the stronger one). Explain the trade-off.`;
+      return `These pages on my site compete for the Google search "${f.query}": ${(f.pages || []).join(', ')} (site: ${site.url}). Read them and recommend ONE: merge them (which one keeps the URL, what moves over, and the 301 redirect to add), or differentiate them (a distinct search intent for each, new titles, and internal links from the weaker page to the stronger one). Tell me which you'd choose and why.`;
     case 'decay':
       return `My page ${page} is losing Google clicks: ${f.evidence.replace(/\.$/, '')}. Help me find out why. Check: is the content out of date, did the title or page change recently, is a competitor now outranking it for the main searches, is it still indexable (no noindex, loads fast, canonical correct)? Then give me a short refresh plan in order of impact.`;
     case 'prune':
@@ -49,7 +49,8 @@ export function describeImpact(before, after) {
   if (!before || !after) return null;
   const parts = [];
   const d = (k) => (after[k] || 0) - (before[k] || 0);
-  if (before.clicks !== undefined) parts.push(`clicks ${before.clicks} → ${after.clicks} (${d('clicks') >= 0 ? '+' : ''}${d('clicks')})`);
+  const n = (v) => Number(v || 0).toLocaleString('en-US');
+  if (before.clicks !== undefined) parts.push(`clicks ${n(before.clicks)} → ${n(after.clicks)} (${d('clicks') >= 0 ? '+' : ''}${n(d('clicks'))})`);
   if (before.ctr) parts.push(`click rate ${(before.ctr * 100).toFixed(1)}% → ${((after.ctr || 0) * 100).toFixed(1)}%`);
   if (before.position) parts.push(`position ${before.position} → ${after.position ?? '–'}`);
   return { text: parts.join(', '), better: d('clicks') > 0 || (before.position && after.position && after.position < before.position - 0.5) };

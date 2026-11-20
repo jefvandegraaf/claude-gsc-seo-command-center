@@ -49,16 +49,18 @@ export async function collect(site, secrets, { now = new Date(), log = () => {} 
     log('Search Console…');
     await grab('gsc', async () => {
       const q = (range, dimensions, extra = {}) => gscQuery(token, site.gscProperty, { ...range, dimensions, ...extra });
-      const [pages, prevPages, pages90, queryPages, prevQueries, daily] = await Promise.all([
+      const [pages, prevPages, pages90, queryPages, prevQueries, daily, devices] = await Promise.all([
         q(w.cur, ['page']), q(w.prev, ['page']), q(w.d90, ['page']),
         q(w.cur, ['query', 'page'], { maxRows: 50000 }), q(w.prev, ['query'], { maxRows: 25000 }),
         q({ startDate: w.prev.startDate, endDate: w.cur.endDate }, ['date']),
+        q(w.cur, ['device']),
       ]);
       snap.gsc = {
         pages: foldPages(pages), prevPages: foldPages(prevPages), pages90: foldPages(pages90),
         queryPages: hidden(foldPages(queryPages), site.hideQueries),
         prevQueries: hidden(prevQueries.map((r) => ({ query: r.keys[0], clicks: r.clicks, impressions: r.impressions, position: +r.position.toFixed(1) })), site.hideQueries),
         daily: daily.map((r) => ({ date: r.keys[0], clicks: r.clicks, impressions: r.impressions })),
+        devices: Object.fromEntries(devices.map((r) => [r.keys[0].toLowerCase(), r.clicks])),
       };
     });
   }
@@ -108,18 +110,17 @@ export async function collect(site, secrets, { now = new Date(), log = () => {} 
         agg(w.cur, { field_grouping: 'referrer_hostname', sort_by: 'visits:desc', limit: '100' }),
         agg(w.prev, { field_grouping: 'referrer_hostname', sort_by: 'visits:desc', limit: '100' }),
       ]);
-      const conv = async (r) => {
-        let total = 0;
-        for (const name of site.conversions?.fathomEvents || []) {
-          const rows = await fathom(secrets.fathomApiToken, 'aggregations', { entity: 'event', site_id: site.fathomSiteId, entity_name: name, aggregates: 'conversions', ...when(r) });
-          total += Number(rows?.[0]?.conversions || 0);
-        }
-        return total;
-      };
+      // One call per event name and period (Fathom reports one event per call).
+      const events = [];
+      for (const name of site.conversions?.fathomEvents || []) {
+        const count = async (r) => Number((await fathom(secrets.fathomApiToken, 'aggregations', { entity: 'event', site_id: site.fathomSiteId, entity_name: name, aggregates: 'conversions', ...when(r) }))?.[0]?.conversions || 0);
+        events.push({ name, cur: await count(w.cur), prev: await count(w.prev) });
+      }
       const ai = (rows) => (rows || []).filter((x) => AI_SOURCES.test(x.referrer_hostname || ''));
       snap.fathom = {
         visits: Number(cur?.[0]?.visits || 0), prevVisits: Number(prev?.[0]?.visits || 0),
-        conversions: await conv(w.cur), prevConversions: await conv(w.prev),
+        conversions: events.reduce((t, e) => t + e.cur, 0), prevConversions: events.reduce((t, e) => t + e.prev, 0),
+        events,
         aiVisits: ai(refs).reduce((t, x) => t + Number(x.visits || 0), 0),
         prevAiVisits: ai(prevRefs).reduce((t, x) => t + Number(x.visits || 0), 0),
         aiSources: ai(refs).map((x) => ({ source: x.referrer_hostname, visits: Number(x.visits || 0) })),

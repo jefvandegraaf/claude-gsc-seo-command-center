@@ -31,13 +31,13 @@ try {
   const t1 = new Date('2026-12-16T09:00:00Z');
   const later = demoSnapshot(t1);
   const q = later.gsc.queryPages.find((x) => x.query === 'water heater replacement toronto');
-  Object.assign(q, { clicks: 64, position: 4.6 });
+  Object.assign(q, { clicks: 1340, position: 4.6, ctr: 0.0353 });
   const after = loadTasks(site.id).map((t) => (t.id === task.id ? { ...t, doneAt: '2026-11-16T09:00:00Z' } : t));
   saveTasks(site.id, after);
   const r2 = await runSite(site, {}, { snapshot: later, now: t1 });
   const measured = r2.tasks.find((t) => t.id === task.id);
   assert.ok(measured.impact?.better, 'impact should be measured and positive');
-  assert.match(measured.impact.text, /clicks 31 → 64/);
+  assert.match(measured.impact.text, /clicks 980 → 1,340/);
 
   // Scheduler: due on Monday 08:00+, not twice in a week, catches up later in the week.
   const s = { ...site, recipients: ['a@example.com'] };

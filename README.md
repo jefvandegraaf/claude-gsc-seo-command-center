@@ -28,7 +28,7 @@ It runs on your own computer. Your data stays there.
 
 <table><tr>
 <td width="62%"><img src="docs/images/app-tasks.webp" alt="Tasks tab: each finding with its numbers, a fix prompt, Copy, Open in Claude, Mark done and Ignore"><br><img src="docs/images/app-done-impact.webp" alt="A finished task, measured 28 days later: clicks 31 to 64, position 7.4 to 4.6"></td>
-<td width="38%"><img src="docs/images/email-phone-top.webp" alt="The Monday email on a phone"></td>
+<td width="38%"><img src="docs/images/email-phone-top.webp" alt="The Monday email on a phone"><br><img src="docs/images/email-phone-charts.webp" alt="Where leads came from by type, and Google clicks week by week"></td>
 </tr></table>
 
 Optional: let **Claude** pick and explain the week's top three (your own Claude API key, or Claude Code on your own computer). It only ranks and explains findings the rules already made, with their numbers. It can't invent new ones.
